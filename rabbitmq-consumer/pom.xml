@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.romanzhula</groupId>
-    <artifactId>rabbit-consumer</artifactId>
+    <artifactId>rabbitmq-consumer</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>rabbit-consumer</name>
     <description>rabbit-consumer</description>
