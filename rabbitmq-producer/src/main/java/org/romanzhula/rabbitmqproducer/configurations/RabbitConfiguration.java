@@ -2,14 +2,19 @@ package org.romanzhula.rabbitmqproducer.configurations;
 
 
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.ErrorHandler;
 
 
+@Slf4j
 @Setter
 @Configuration
 public class RabbitConfiguration {
@@ -55,6 +60,22 @@ public class RabbitConfiguration {
     @Bean
     public RabbitAdmin rabbitAdmin() {
         return new RabbitAdmin(cachingConnectionFactory());
+    }
+
+    @Bean
+    public ErrorHandler rabbitErrorHandler() {
+        return (Throwable t) -> {
+            log.error("Error handling message", t);
+
+            throw new AmqpRejectAndDontRequeueException("Error processing message", t);
+        };
+    }
+
+    @Bean
+    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ErrorHandler rabbitErrorHandler) {
+        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+        factory.setErrorHandler(rabbitErrorHandler);
+        return factory;
     }
 
 }
