@@ -45,4 +45,16 @@ public class MessageController {
         );
     }
 
+    @PostMapping("/send/fanout-exchange")
+    public ResponseEntity<?> sendMessageFanoutExchange(
+            @RequestBody String text
+    ) {
+        messageSenderService.sendMessageFanoutExchange(text);
+
+        return new ResponseEntity<>(
+                "Text sent successfully to all queues!",
+                HttpStatusCode.valueOf(200)
+        );
+    }
+
 }
