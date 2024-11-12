@@ -61,4 +61,12 @@ public class MessageSenderService {
         amqpTemplate.convertAndSend(queueNameManually, message);
     }
 
+    public void sendMessageFanoutExchange(String message) {
+        if (message.isBlank()) {
+            log.error("Message from fanoutExchange cannot be empty!");
+            throw new InvalidTextException("Message from fanoutExchange cannot be empty!");
+        }
+        amqpTemplate.convertAndSend("fanoutExchange", "", message);
+    }
+
 }
