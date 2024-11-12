@@ -73,14 +73,10 @@ public class RabbitConfiguration {
 
     @Bean
     public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(
-            ErrorHandler rabbitErrorHandler,
-            CachingConnectionFactory cachingConnectionFactory
+            ErrorHandler rabbitErrorHandler
     ) {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setErrorHandler(rabbitErrorHandler);
-        factory.setConnectionFactory(cachingConnectionFactory);
-        factory.setConcurrentConsumers(2);  // initial number of consumers
-        factory.setMaxConcurrentConsumers(5);  // max number of consumer during loading
         return factory;
     }
 

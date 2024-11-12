@@ -15,7 +15,7 @@ public class RabbitmqSecondConsumer {
     private final RabbitmqSecondConsumerConfig rabbitmqSecondConsumerConfig;
 
 
-    @RabbitListener(queues = "#{@rabbitmqSecondConsumerConfig.getQueueNameTwo()}", containerFactory = "rabbitListenerContainerFactory")
+    @RabbitListener(queues = "#{@rabbitmqSecondConsumerConfig.getQueueNameTwo()}")
     public void receiveQueueTwo(String text) {
         getLogQueueMessage(rabbitmqSecondConsumerConfig.getQueueNameTwo(), text);
     }
