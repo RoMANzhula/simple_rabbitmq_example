@@ -4,6 +4,9 @@ package org.romanzhula.rabbitmqproducer.configurations;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -33,6 +36,9 @@ public class RabbitConfiguration {
 
     @Value("${rabbitmq.queue.name.two}")
     private String queueNameTwo;
+
+    @Value("${rabbitmq.exchange.name}")
+    private String exchangeName;
 
 
     @Bean
@@ -78,6 +84,22 @@ public class RabbitConfiguration {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setErrorHandler(rabbitErrorHandler);
         return factory;
+    }
+
+                // add FanoutExchange to route common message to two queues
+    @Bean
+    public FanoutExchange fanoutExchange() {
+        return new FanoutExchange(exchangeName);
+    }
+
+    @Bean
+    public Binding bindingOne(FanoutExchange fanoutExchange, Queue queueOne) {
+        return BindingBuilder.bind(queueOne).to(fanoutExchange);
+    }
+
+    @Bean
+    public Binding bindingTwo(FanoutExchange fanoutExchange, Queue queueTwo) {
+        return BindingBuilder.bind(queueTwo).to(fanoutExchange);
     }
 
 }
