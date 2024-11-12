@@ -15,12 +15,12 @@ public class RabbitmqConsumer {
     private final RabbitmqConsumerConfig rabbitmqConsumerConfig;
 
 
-    @RabbitListener(queues = "#{@rabbitmqConfigConsumer.getQueueNameOne()}")
+    @RabbitListener(queues = "#{@rabbitmqConsumerConfig.getQueueNameOne()}", containerFactory = "rabbitListenerContainerFactory")
     public void receiveQueueOne(String text) {
         getLogQueueMessage(rabbitmqConsumerConfig.getQueueNameOne(), text);
     }
 
-    @RabbitListener(queues = "#{@rabbitmqConfigConsumer.getQueueNameTwo()}")
+    @RabbitListener(queues = "#{@rabbitmqConsumerConfig.getQueueNameTwo()}", containerFactory = "rabbitListenerContainerFactory")
     public void receiveQueueTwo(String text) {
         getLogQueueMessage(rabbitmqConsumerConfig.getQueueNameTwo(), text);
     }
