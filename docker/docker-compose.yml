@@ -15,6 +15,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 30s
 
   rabbitmq-producer:
     build:
@@ -29,6 +30,7 @@ services:
     environment:
       - SPRING_RABBITMQ_HOST=rabbitmq
       - SPRING_RABBITMQ_PORT=5672
+    entrypoint: ["sh", "-c", "sleep 30 && java -jar app.jar"]
 
   rabbitmq-consumer:
     build:
@@ -43,6 +45,7 @@ services:
     environment:
       - SPRING_RABBITMQ_HOST=rabbitmq
       - SPRING_RABBITMQ_PORT=5672
+    entrypoint: ["sh", "-c", "sleep 60 && java -jar app.jar"]
 
   rabbitmq-second-consumer:
     build:
@@ -57,4 +60,4 @@ services:
     environment:
       - SPRING_RABBITMQ_HOST=rabbitmq
       - SPRING_RABBITMQ_PORT=5672
-
+    entrypoint: ["sh", "-c", "sleep 60 && java -jar app.jar"]
