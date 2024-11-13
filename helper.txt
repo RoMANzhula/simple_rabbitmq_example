@@ -1,0 +1,13 @@
+0. Run Docker Desktop (for Windows)
+1. Run rabbitmq from Docker Desktop (Windows) from terminal(root directory):
+    docker run -d -p 5672:5672 -p 15672:15672 --name rabbitmq rabbitmq:management
+2. Go to browser (to open rabbitmq management) , input localhost:15672
+    user: guest
+    password: guest
+3. Run all services on Intellij IDEA
+4. In Postman: post request - http://localhost:8080/api/v1/send/first-queue
+    Body -> raw -> write some text(message) - it's for first queue
+5. In Postman: post request - http://localhost:8080/api/v1/send/second-queue
+    Body -> raw -> write some text(message) - it's for second queue
+6. In Postman: post request - http://localhost:8080/api/v1/send/manually?queueName=QueueForFistConsumerTransient
+7.
