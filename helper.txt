@@ -18,3 +18,5 @@
 4. If service not work - check errors in the service, terminal: docker logs here_name_service   //for name example - rabbitmq-producer
 5. If service is OK but not work - rerun rebbitmq again, terminal: docker-compose restart rabbitmq
 6. Stop docker, terminal: docker-compose down
+
+7. Last update docker-compose solves the problem of alternate launch of services (docs: https://docs.docker.com/compose/how-tos/startup-order/)
