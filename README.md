@@ -30,7 +30,7 @@ work with messages, queues, sending and receiving.
 ### How to check working
     
     Open browser: Input for RabbitMQ management: [http://localhost:15672](http://localhost:15672)
-    Go to the Postman:
+    Go to the Postman and check:
     post request - http://localhost:8080/api/v1/send/first-queue
         Body -> raw -> write some text(message) - it's for first queue
     post request - http://localhost:8080/api/v1/send/second-queue
